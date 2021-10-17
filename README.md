@@ -1,6 +1,6 @@
 # @textlint-rule/textlint-rule-no-duplicate-abbr
 
-textlint rule that avoid adding duplicated suffix word for Acronyms and Abbreviations.
+[textlint](https://github.com/textlint/textlint) rule that avoid adding duplicated suffix word for Acronyms and Abbreviations.
 
 **OK**:
 
@@ -11,12 +11,17 @@ BGP is Border Gateway Protocol.
 **NG**:
 
 ```
-DAO object is Data Access Object
-This is BGP protocol
+This is BGP protocol.
+DAO object is Data Access Object.
 これはBGPプロトコルです。
 ```
 
 You can avoid using "DAO Object" - "Data Access Object Object".
+
+## Supported Languages
+
+- {Acronyms or Abbreviations} + English
+- {Acronyms or Abbreviations} + Japanese
 
 ## Install
 
