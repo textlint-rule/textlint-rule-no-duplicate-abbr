@@ -1,16 +1,29 @@
 import { TextlintRuleReporter } from "@textlint/types";
 import dataset from "./dataset.json";
 
-const reporter: TextlintRuleReporter = (context) => {
+export type Options = {
+    /**
+     * A list for ignoring Acronyms or Abbreviations.
+     * e.g. you can allow "NPO organization" by following setting.
+     * "allowAbbrList": ["NPO"]
+     */
+    allowAbbrList: string[];
+};
+const reporter: TextlintRuleReporter<Options> = (context, options) => {
     const { Syntax, getSource, report, RuleError } = context;
     const abbrDataSet = new Map<string, { suffixes: string[]; definition: string }>(
         dataset as [string, { suffixes: string[]; definition: string }][]
     );
+    const allowAbbrList = options?.allowAbbrList ?? [];
     return {
         [Syntax.Str](node) {
             const source = getSource(node);
             const words = source.split(/\b/);
             words.forEach((word, index) => {
+                // Skip the word
+                if (allowAbbrList.includes(word)) {
+                    return;
+                }
                 const hasSpace = /\s/.test(words[index + 1]);
                 const nextWord = hasSpace ? words[index + 2] : words[index + 1];
                 if (!nextWord) {
@@ -31,7 +44,7 @@ const reporter: TextlintRuleReporter = (context) => {
                     report(
                         node,
                         new RuleError(
-                            `"${word}${spacer}${nextWord}" uses duplicated suffix word. "${word}" stands for "${matchData.definition}".`,
+                            `"${word}${spacer}${nextWord}" has duplicated suffix word. "${word}" stands for "${matchData.definition}".`,
                             {
                                 index: startIndexOfWord
                             }

@@ -47,6 +47,31 @@ Via CLI
 textlint --rule @textlint-rule/no-duplicate-abbr README.md
 ```
 
+## Options
+
+```ts
+export type Options = {
+    /**
+     * A list for ignoring Acronyms or Abbreviations.
+     * e.g. you can allow "NPO organization" by following setting.
+     * "allowAbbrList": ["NPO"]
+     */
+    allowAbbrList: string[];
+}
+```
+
+Example setting:
+
+```json5
+{
+  "rules": {
+    "@textlint-rule/no-duplicate-abbr": {
+      "allowAbbrList": ["NPO"] // Allow to use "NPO organization"
+    }
+  }
+}
+```
+
 ## Changelog
 
 See [Releases page](https://github.com/textlint-rule/textlint-rule-no-duplicate-abbr/releases).
