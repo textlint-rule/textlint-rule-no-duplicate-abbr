@@ -1,4 +1,4 @@
-import { TextlintRuleReporter } from "@textlint/types";
+import type { TextlintRuleReporter } from "@textlint/types";
 import dataset from "./dataset.json";
 
 export type Options = {
