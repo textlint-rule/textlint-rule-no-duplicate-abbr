@@ -1,0 +1,64 @@
+{
+  "name": "@textlint-rule/textlint-rule-no-duplicate-abbr",
+  "version": "1.0.0",
+  "description": "textlint rule that avoid adding duplicated suffix word for Acronyms and Abbreviations.",
+  "keywords": [
+    "textlintrule"
+  ],
+  "homepage": "https://github.com/textlint-rule/textlint-rule-no-duplicate-abbr",
+  "bugs": {
+    "url": "https://github.com/textlint-rule/textlint-rule-no-duplicate-abbr/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/textlint-rule/textlint-rule-no-duplicate-abbr.git"
+  },
+  "license": "MIT",
+  "author": "azu",
+  "main": "lib/textlint-rule-no-duplicate-abbr.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "files": [
+    "bin/",
+    "lib/",
+    "src/"
+  ],
+  "scripts": {
+    "build-match-set": "ts-node-transpile-only ./tools/create-match-set.ts",
+    "test": "textlint-scripts test",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,css}\"",
+    "prepare": "git config --local core.hooksPath .githooks",
+    "prepublishOnly": "npm run build",
+    "build": "textlint-scripts build",
+    "watch": "textlint-scripts build --watch"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,css}": [
+      "prettier --write"
+    ]
+  },
+  "prettier": {
+    "printWidth": 120,
+    "singleQuote": false,
+    "tabWidth": 4,
+    "trailingComma": "none"
+  },
+  "devDependencies": {
+    "@textlint/types": "^12.0.2",
+    "@types/node": "^16.11.1",
+    "lint-staged": "^11.2.3",
+    "prettier": "^2.4.1",
+    "textlint-scripts": "^12.0.2",
+    "textlint-tester": "^12.0.2",
+    "ts-node": "^10.3.0",
+    "typescript": "^4.4.4"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "sudachi-synonyms-dictionary": "^9.0.0"
+  }
+}
