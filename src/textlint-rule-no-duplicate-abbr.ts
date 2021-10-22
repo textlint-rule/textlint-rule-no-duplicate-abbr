@@ -20,11 +20,15 @@ const reporter: TextlintRuleReporter<Options> = (context, options) => {
             const source = getSource(node);
             const words = source.split(/\b/);
             words.forEach((word, index) => {
+                const noSuffix = words[index + 1] == undefined;
+                if (noSuffix) {
+                    return;
+                }
                 // Skip the word
                 if (allowAbbrList.includes(word)) {
                     return;
                 }
-                const hasSpace = /\s/.test(words[index + 1]);
+                const hasSpace = /^\s+$/.test(words[index + 1]);
                 const nextWord = hasSpace ? words[index + 2] : words[index + 1];
                 if (!nextWord) {
                     return;
@@ -33,8 +37,13 @@ const reporter: TextlintRuleReporter<Options> = (context, options) => {
                 if (!matchData) {
                     return;
                 }
+                // ABC  プロトコル
+                // ^^^|^^^^^^^^^
+                // [0] [1]
+                // [1] to be " プロトコル"
+                const normalizedNextWord = nextWord.trimStart();
                 const useDuplicatedSuffixWord = matchData.suffixes.find((suffixWord) => {
-                    return nextWord.startsWith(suffixWord);
+                    return normalizedNextWord.startsWith(suffixWord);
                 });
                 if (useDuplicatedSuffixWord) {
                     const spacer = hasSpace ? words[index + 1] : "";
